@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	dbtools "go-mysql-db/dbtool"
+	"go-mysql-db/models"
 	"log"
 	"os"
 )
@@ -29,6 +30,11 @@ func main() {
 
 	dbtools.DBInitializer(conf.DriverName, conf.DataSourceName)
 
-	student := dbtools.SelectStudentByID(1)
-	fmt.Println("ID:", student.ID, "\nName:", student.Name, "\nAge:", student.Age)
+	student := models.Student{
+		ID:   3,
+		Name: "Robert",
+		Age:  28,
+	}
+	lastInsertedID := dbtools.Save(student)
+	fmt.Println("Last Inserted ID", lastInsertedID)
 }

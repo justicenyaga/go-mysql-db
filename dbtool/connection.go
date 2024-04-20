@@ -68,3 +68,25 @@ func SelectStudentByID(id int) models.Student {
 
 	return student
 }
+
+func Save(student models.Student) int64 {
+	db := connect()
+	defer db.Close()
+
+	save, err := db.Prepare("insert into student (id, name, age) values(?, ?, ?)")
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+
+	result, err := save.Exec(student.ID, student.Name, student.Age)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+
+	studentID, err := result.LastInsertId()
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+
+	return studentID
+}
