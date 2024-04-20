@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	dbtools "go-mysql-db/dbtool"
 	"log"
 	"os"
@@ -27,4 +28,9 @@ func main() {
 	}
 
 	dbtools.DBInitializer(conf.DriverName, conf.DataSourceName)
+
+	students := dbtools.SelectAllStudents()
+	for _, student := range students {
+		fmt.Println("ID:", student.ID, "\tName:", student.Name, "\tAge:", student.Age)
+	}
 }

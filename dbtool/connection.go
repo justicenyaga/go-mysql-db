@@ -2,6 +2,7 @@ package dbtools
 
 import (
 	"database/sql"
+	"go-mysql-db/models"
 	"log"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -24,4 +25,30 @@ func connect() *sql.DB {
 	}
 
 	return db
+}
+
+func SelectAllStudents() []models.Student {
+	db := connect()
+	defer db.Close()
+
+	rows, err := db.Query("select * from student")
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+
+	students := []models.Student{}
+
+	for rows.Next() {
+		student := models.Student{}
+
+		err = rows.Scan(&student.ID, &student.Name, &student.Age)
+		if err != nil {
+			log.Fatal(err.Error())
+			continue
+		}
+
+		students = append(students, student)
+	}
+
+	return students
 }
