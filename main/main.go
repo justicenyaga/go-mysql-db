@@ -32,9 +32,9 @@ func main() {
 
 	student := models.Student{
 		ID:   3,
-		Name: "Robert",
-		Age:  28,
+		Name: "Caleb",
+		Age:  31,
 	}
-	lastInsertedID := dbtools.Save(student)
-	fmt.Println("Last Inserted ID", lastInsertedID)
+	rowsAffected := dbtools.Update(student)
+	fmt.Println("Rows Affected:", rowsAffected)
 }

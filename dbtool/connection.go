@@ -90,3 +90,25 @@ func Save(student models.Student) int64 {
 
 	return studentID
 }
+
+func Update(student models.Student) int64 {
+	db := connect()
+	defer db.Close()
+
+	update, err := db.Prepare("update student set name = ?, age = ? where id = ?")
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+
+	result, err := update.Exec(student.Name, student.Age, student.ID)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+
+	return rowsAffected
+}
