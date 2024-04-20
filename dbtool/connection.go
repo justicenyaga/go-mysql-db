@@ -112,3 +112,25 @@ func Update(student models.Student) int64 {
 
 	return rowsAffected
 }
+
+func Delete(id int) int64 {
+	db := connect()
+	defer db.Close()
+
+	del, err := db.Prepare("delete from student where id = ?")
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+
+	result, err := del.Exec(id)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+
+	return rowsAffected
+}

@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	dbtools "go-mysql-db/dbtool"
-	"go-mysql-db/models"
 	"log"
 	"os"
 )
@@ -30,11 +29,6 @@ func main() {
 
 	dbtools.DBInitializer(conf.DriverName, conf.DataSourceName)
 
-	student := models.Student{
-		ID:   3,
-		Name: "Caleb",
-		Age:  31,
-	}
-	rowsAffected := dbtools.Update(student)
+	rowsAffected := dbtools.Delete(3)
 	fmt.Println("Rows Affected:", rowsAffected)
 }
