@@ -29,8 +29,6 @@ func main() {
 
 	dbtools.DBInitializer(conf.DriverName, conf.DataSourceName)
 
-	students := dbtools.SelectAllStudents()
-	for _, student := range students {
-		fmt.Println("ID:", student.ID, "\tName:", student.Name, "\tAge:", student.Age)
-	}
+	student := dbtools.SelectStudentByID(1)
+	fmt.Println("ID:", student.ID, "\nName:", student.Name, "\nAge:", student.Age)
 }

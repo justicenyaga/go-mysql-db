@@ -52,3 +52,19 @@ func SelectAllStudents() []models.Student {
 
 	return students
 }
+
+func SelectStudentByID(id int) models.Student {
+	db := connect()
+	defer db.Close()
+
+	row := db.QueryRow("select * from student where id = ?", id)
+
+	student := models.Student{}
+
+	err := row.Scan(&student.ID, &student.Name, &student.Age)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+
+	return student
+}
